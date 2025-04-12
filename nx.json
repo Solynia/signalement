@@ -31,6 +31,19 @@
       "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "none"
+    },
+    "@nx/angular:component": {
+      "style": "scss",
+      "changeDetection": "OnPush",
+      "prefix": "sg",
+      "skipTests": true
+    },
+    "@nx/angular:library": {
+      "changeDetection": "OnPush",
+      "linter": "eslint",
+      "prefix": "sg",
+      "style": "scss",
+      "unitTestRunner": "none"
     }
   }
 }
