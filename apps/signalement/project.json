@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/signalement",
         "index": "apps/signalement/src/index.html",
@@ -22,7 +24,10 @@
             "input": "apps/signalement/public"
           }
         ],
-        "styles": ["apps/signalement/src/styles.scss"],
+        "styles": [
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/signalement/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
