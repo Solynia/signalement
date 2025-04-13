@@ -24,5 +24,5 @@ export type SignalementCreateDto = Omit<
 export type SignalementUpdateDto = Required<Pick<SignalementDto, 'id'>> &
   Partial<Omit<SignalementDto, 'id' | 'author' | 'observations'>> & {
     author?: AuthorCreateDto | AuthorDto;
-    observations: (ObservationCreateDto | ObservationUpdateDto)[];
+    observations?: (ObservationCreateDto | ObservationUpdateDto)[];
   };

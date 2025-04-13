@@ -15,13 +15,21 @@ export class SignalementDataAccessService {
   findById(id: string): Promise<SignalementDto | null> {
     return this.prismaService.signalement.findUnique({
       where: { id },
-      include: { author: true, observations: true },
+      omit: { authorId: true },
+      include: {
+        author: true,
+        observations: { omit: { signalementId: true } },
+      },
     });
   }
 
   findAll(): Promise<SignalementDto[]> {
     return this.prismaService.signalement.findMany({
-      include: { author: true, observations: true },
+      omit: { authorId: true },
+      include: {
+        author: true,
+        observations: { omit: { signalementId: true } },
+      },
     });
   }
 
@@ -41,7 +49,11 @@ export class SignalementDataAccessService {
         },
         observations: { createMany: { data: observations } },
       },
-      include: { author: true, observations: true },
+      omit: { authorId: true },
+      include: {
+        author: true,
+        observations: { omit: { signalementId: true } },
+      },
     });
   }
 
@@ -49,39 +61,41 @@ export class SignalementDataAccessService {
     id: string,
     { author, observations, ...data }: SignalementUpdateDto
   ): Promise<SignalementDto> {
-    const updatedObservations = observations.filter(
-      (o): o is ObservationUpdateDto => 'id' in o
-    );
-    const newObservations = observations.filter(
-      (o): o is ObservationCreateDto => !('id' in o)
-    );
+    const updatedObservations =
+      observations?.filter((o): o is ObservationUpdateDto => 'id' in o) ?? [];
+    const newObservations =
+      observations?.filter((o): o is ObservationCreateDto => !('id' in o)) ??
+      [];
 
     return this.prismaService.signalement.update({
       where: { id },
       data: {
         ...data,
-        author: author
-          ? {
-              upsert: {
-                where: { email: author.email },
-                create: author,
-                update: {},
-              },
-            }
-          : {},
-        observations: {
-          deleteMany: {
-            signalementId: data.id,
-            id: { notIn: updatedObservations.map((o) => o.id) },
+        ...(!!author && {
+          author: {
+            ...('id' in author && { connect: { id: author.id } }),
+            ...(!('id' in author) && { create: author }),
           },
-          createMany: { data: newObservations },
-          updateMany: updatedObservations.map((o) => ({
-            data: { name: o.name },
-            where: { id: o.id },
-          })),
-        },
+        }),
+        ...(!!observations && {
+          observations: {
+            deleteMany: {
+              signalementId: data.id,
+              id: { notIn: updatedObservations.map((o) => o.id) },
+            },
+            createMany: { data: newObservations },
+            updateMany: updatedObservations.map((o) => ({
+              data: { name: o.name },
+              where: { id: o.id },
+            })),
+          },
+        }),
       },
-      include: { author: true, observations: true },
+      omit: { authorId: true },
+      include: {
+        author: true,
+        observations: { omit: { signalementId: true } },
+      },
     });
   }
 

@@ -22,7 +22,7 @@ model Observation {
   id            String      @id @default(cuid())
   name          String
   signalementId String
-  signalement   Signalement @relation(fields: [signalementId], references: [id])
+  signalement   Signalement @relation(fields: [signalementId], references: [id], onDelete: Cascade)
 }
 
 model Signalement {
