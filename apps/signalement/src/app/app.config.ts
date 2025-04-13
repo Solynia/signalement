@@ -4,6 +4,7 @@ import {
   isDevMode,
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
@@ -25,5 +26,14 @@ export const appConfig: ApplicationConfig = {
     provideState(signalementFeature),
     provideEffects([signalementEffects]),
     provideStoreDevtools({ logOnly: !isDevMode() }),
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        hideRequiredMarker: false,
+        floatLabel: 'always',
+        subscriptSizing: 'fixed',
+      },
+    },
   ],
 };
