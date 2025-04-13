@@ -1,0 +1,27 @@
+{
+  "name": "prisma-schema",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/prisma-schema",
+  "projectType": "library",
+  "tags": ["scope:shared", "app:nest", "type:utils"],
+  "targets": {
+    "prisma": {
+      "command": "prisma",
+      "options": {
+        "cwd": "libs/shared/prisma-schema/"
+      }
+    },
+    "migrate": {
+      "command": "prisma migrate dev",
+      "options": {
+        "cwd": "libs/shared/prisma-schema/"
+      }
+    },
+    "generate-types": {
+      "command": "prisma generate",
+      "options": {
+        "cwd": "libs/shared/prisma-schema/"
+      }
+    }
+  }
+}
