@@ -1,12 +1,11 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { Signalement } from '@signalement/signalement-service';
 import { produce } from 'immer';
 import {
   SIGNALEMENT_STORE_FEATURE_KEY,
   signalementActions,
 } from './signalement-store.actions';
-
-type Signalement = unknown;
 
 export type SignalementStoreState = EntityState<Signalement> & {
   selectedId: string | undefined;
