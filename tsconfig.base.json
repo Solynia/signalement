@@ -27,6 +27,9 @@
       ],
       "@signalement/signalement-feature": [
         "libs/signalement/signalement-feature/src/index.ts"
+      ],
+      "@signalement/signalement-store": [
+        "libs/signalement/signalement-store/src/index.ts"
       ]
     }
   },
