@@ -1,0 +1,8 @@
+{
+  "name": "author-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/author/author-feature/src",
+  "projectType": "library",
+  "tags": ["app:nest", "scope:author", "type:feature"],
+  "targets": {}
+}

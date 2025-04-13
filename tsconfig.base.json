@@ -18,9 +18,15 @@
       "@signalement/author-data-access": [
         "libs/author/author-data-access/src/index.ts"
       ],
+      "@signalement/author-feature": [
+        "libs/author/author-feature/src/index.ts"
+      ],
       "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
       "@signalement/signalement-data-access": [
         "libs/signalement/signalement-data-access/src/index.ts"
+      ],
+      "@signalement/signalement-feature": [
+        "libs/signalement/signalement-feature/src/index.ts"
       ]
     }
   },
