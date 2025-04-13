@@ -22,5 +22,10 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    [routerLink]="`/signalements/${row.id}`"
+    class="cursor-pointer hover:bg-gray-200"
+  ></tr>
 </table>

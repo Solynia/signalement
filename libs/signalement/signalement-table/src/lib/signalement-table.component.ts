@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 
 export type TableItem = {
   id: string;
@@ -14,7 +15,7 @@ const defaultArray = (value: TableItem[] | null) => value ?? [];
 
 @Component({
   selector: 'sg-signalement-table',
-  imports: [MatTableModule, MatTooltipModule],
+  imports: [MatTableModule, MatTooltipModule, RouterLink],
   templateUrl: './signalement-table.component.html',
   styleUrl: './signalement-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
