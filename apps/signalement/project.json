@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "sg",
   "sourceRoot": "apps/signalement/src",
-  "tags": [],
+  "tags": ["app:ng"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
