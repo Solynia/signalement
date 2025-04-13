@@ -1,0 +1,39 @@
+<section [formGroup]="form" class="p-5 grid grid-cols-1 md:grid-cols-3 gap-5">
+  <mat-form-field [floatLabel]="'always'">
+    <mat-label>Prénom</mat-label>
+    <input matInput formControlName="first_name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="last_name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date de naissance</mat-label>
+    <input
+      matInput
+      formControlName="birth_date"
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="picker"
+    />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Sexe</mat-label>
+    <mat-select formControlName="sex">
+      @for (sex of sexes; track sex) {
+      <mat-option [value]="sex">{{ sex | titlecase }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+
+</section>

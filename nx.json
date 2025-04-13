@@ -39,9 +39,9 @@
       "skipTests": true
     },
     "@nx/angular:library": {
-      "flat": true,
       "linter": "eslint",
       "unitTestRunner": "none",
+      "flat": true,
       "simpleName": true,
       "skipTests": true,
       "changeDetection": "OnPush",

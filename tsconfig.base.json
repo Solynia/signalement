@@ -24,6 +24,7 @@
       "@signalement/author-feature": [
         "libs/author/author-feature/src/index.ts"
       ],
+      "@signalement/author-form": ["libs/author/author-form/src/index.ts"],
       "@signalement/author-service": [
         "libs/author/author-service/src/index.ts"
       ],
