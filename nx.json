@@ -39,6 +39,7 @@
       "skipTests": true
     },
     "@nx/angular:library": {
+      "flat": true,
       "linter": "eslint",
       "unitTestRunner": "none",
       "simpleName": true,
