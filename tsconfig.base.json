@@ -45,6 +45,9 @@
       "@signalement/signalement-store": [
         "libs/signalement/signalement-store/src/index.ts"
       ],
+      "@signalement/signalement-table": [
+        "libs/signalement/signalement-table/src/index.ts"
+      ],
       "@signalement/signalements-page": [
         "libs/signalement/signalements-page/src/index.ts"
       ]

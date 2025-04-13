@@ -1,1 +1,1 @@
-export * from './lib/signalement-details-page/signalement-details-page.component';
+export * from './lib/signalement-details-page.component';

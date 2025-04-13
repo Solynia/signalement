@@ -1,1 +1,1 @@
-export * from './lib/authors-page/authors-page.component';
+export * from './lib/authors-page.component';
