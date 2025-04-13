@@ -12,7 +12,7 @@ export const {
 
 export const selectSignalements = createSelector(
   selectSignalementEntities,
-  (entities) => Object.values(entities)
+  (entities) => Object.values(entities).filter((e) => !!e)
 );
 
 export const selectSelectedSignalement = createSelector(
