@@ -21,12 +21,18 @@
       "@signalement/author-feature": [
         "libs/author/author-feature/src/index.ts"
       ],
+      "@signalement/author-service": [
+        "libs/author/author-service/src/index.ts"
+      ],
       "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
       "@signalement/signalement-data-access": [
         "libs/signalement/signalement-data-access/src/index.ts"
       ],
       "@signalement/signalement-feature": [
         "libs/signalement/signalement-feature/src/index.ts"
+      ],
+      "@signalement/signalement-service": [
+        "libs/signalement/signalement-service/src/index.ts"
       ],
       "@signalement/signalement-store": [
         "libs/signalement/signalement-store/src/index.ts"

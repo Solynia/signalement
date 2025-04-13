@@ -1,3 +1,4 @@
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
   ApplicationConfig,
   isDevMode,
@@ -17,6 +18,7 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(),
+    provideHttpClient(withFetch()),
     provideRouter(appRoutes),
     provideStore({ router: routerReducer }),
     provideRouterStore(),
