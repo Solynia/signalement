@@ -40,6 +40,9 @@
       "@signalement/signalement-feature": [
         "libs/signalement/signalement-feature/src/index.ts"
       ],
+      "@signalement/signalement-form": [
+        "libs/signalement/signalement-form/src/index.ts"
+      ],
       "@signalement/signalement-service": [
         "libs/signalement/signalement-service/src/index.ts"
       ],
