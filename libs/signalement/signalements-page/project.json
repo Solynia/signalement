@@ -1,0 +1,13 @@
+{
+  "name": "signalements-page",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/signalement/signalements-page/src",
+  "prefix": "sg",
+  "projectType": "library",
+  "tags": ["app:ng", "scope:signalement", "type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

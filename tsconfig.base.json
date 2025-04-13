@@ -18,16 +18,23 @@
       "@signalement/author-data-access": [
         "libs/author/author-data-access/src/index.ts"
       ],
+      "@signalement/author-details-page": [
+        "libs/author/author-details-page/src/index.ts"
+      ],
       "@signalement/author-feature": [
         "libs/author/author-feature/src/index.ts"
       ],
       "@signalement/author-service": [
         "libs/author/author-service/src/index.ts"
       ],
+      "@signalement/authors-page": ["libs/author/authors-page/src/index.ts"],
       "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
       "@signalement/side-nav-list": ["libs/shared/side-nav-list/src/index.ts"],
       "@signalement/signalement-data-access": [
         "libs/signalement/signalement-data-access/src/index.ts"
+      ],
+      "@signalement/signalement-details-page": [
+        "libs/signalement/signalement-details-page/src/index.ts"
       ],
       "@signalement/signalement-feature": [
         "libs/signalement/signalement-feature/src/index.ts"
@@ -37,6 +44,9 @@
       ],
       "@signalement/signalement-store": [
         "libs/signalement/signalement-store/src/index.ts"
+      ],
+      "@signalement/signalements-page": [
+        "libs/signalement/signalements-page/src/index.ts"
       ]
     }
   },

@@ -42,6 +42,7 @@
       "linter": "eslint",
       "unitTestRunner": "none",
       "simpleName": true,
+      "skipTests": true,
       "changeDetection": "OnPush",
       "prefix": "sg",
       "style": "scss"
