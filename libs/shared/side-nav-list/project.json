@@ -1,0 +1,13 @@
+{
+  "name": "side-nav-list",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/side-nav-list/src",
+  "prefix": "sg",
+  "projectType": "library",
+  "tags": ["app:ng", "scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

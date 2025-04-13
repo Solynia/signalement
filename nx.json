@@ -39,9 +39,9 @@
       "skipTests": true
     },
     "@nx/angular:library": {
-      "simpleName": true,
       "linter": "eslint",
       "unitTestRunner": "none",
+      "simpleName": true,
       "changeDetection": "OnPush",
       "prefix": "sg",
       "style": "scss"

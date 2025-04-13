@@ -1,2 +1,31 @@
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
+<div
+  class="flex flex-col absolute top-0 bottom-0 left-0 right-0"
+  [class.is-mobile]="isMobile()"
+>
+  <mat-toolbar class="toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="ml-[8px]">{{ title | uppercase }}</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="sidenav-container"
+    [style.marginTop.px]="marginTop()"
+  >
+    <mat-sidenav
+      #snav
+      [opened]="sideNavOpened()"
+      [mode]="sideNavMode()"
+      [fixedInViewport]="isMobile()"
+      fixedTopGap="56"
+      role="navigation"
+    >
+      <sg-side-nav-list [navItems]="navItems" />
+    </mat-sidenav>
+
+    <mat-sidenav-content role="main">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
