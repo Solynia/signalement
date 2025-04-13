@@ -7,3 +7,28 @@ datasource db {
   provider = "sqlite"
   url      = "file:../../../../.db/dev.db"
 }
+
+model Author {
+  id          String        @id @default(cuid())
+  first_name  String
+  last_name   String
+  birth_date  DateTime
+  sex         String
+  email       String        @unique
+  signalement Signalement[]
+}
+
+model Observation {
+  id            String      @id @default(cuid())
+  name          String
+  signalementId String
+  signalement   Signalement @relation(fields: [signalementId], references: [id])
+}
+
+model Signalement {
+  id           String        @id @default(cuid())
+  description  String
+  authorId     String
+  author       Author        @relation(fields: [authorId], references: [id])
+  observations Observation[]
+}
