@@ -15,7 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"]
+      "@signalement/author-data-access": [
+        "libs/author/author-data-access/src/index.ts"
+      ],
+      "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
+      "@signalement/signalement-data-access": [
+        "libs/signalement/signalement-data-access/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

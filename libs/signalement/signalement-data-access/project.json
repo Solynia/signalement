@@ -1,0 +1,8 @@
+{
+  "name": "signalement-data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/signalement/signalement-data-access/src",
+  "projectType": "library",
+  "tags": ["app:nest", "scope:signalement", "type:data-access"],
+  "targets": {}
+}

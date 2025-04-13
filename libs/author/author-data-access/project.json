@@ -1,0 +1,8 @@
+{
+  "name": "author-data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/author/author-data-access/src",
+  "projectType": "library",
+  "tags": ["app:nest", "scope:author", "type:data-access"],
+  "targets": {}
+}
