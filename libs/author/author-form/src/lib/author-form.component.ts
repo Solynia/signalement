@@ -79,7 +79,7 @@ export class AuthorFormComponent
   );
   sexes = SEXES;
 
-  protected destroyed$ = new ReplaySubject<void>(1);
+  private readonly destroyed$ = new ReplaySubject<void>(1);
 
   readonly form = new FormGroup<AuthorForm>({
     first_name: new FormControl('', {
@@ -116,7 +116,7 @@ export class AuthorFormComponent
 
   disabled = false;
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.form.valueChanges
       .pipe(
         tap(() => {
@@ -128,12 +128,12 @@ export class AuthorFormComponent
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
-  writeValue(value: AuthorFormValue): void {
+  writeValue(value: AuthorFormValue) {
     this.form.setValue(value);
     this.value = value;
   }
@@ -153,7 +153,7 @@ export class AuthorFormComponent
     }
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 

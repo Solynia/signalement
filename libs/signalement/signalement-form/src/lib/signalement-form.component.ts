@@ -72,7 +72,7 @@ export class SignalementFormComponent
 {
   readonly observations = signal<string[]>([]);
 
-  protected destroyed$ = new ReplaySubject<void>(1);
+  private readonly destroyed$ = new ReplaySubject<void>(1);
 
   readonly form = new FormGroup<SignalementForm>({
     description: new FormControl('', {
@@ -109,7 +109,7 @@ export class SignalementFormComponent
 
   disabled = false;
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.form.valueChanges
       .pipe(
         tap(() => {
@@ -121,14 +121,15 @@ export class SignalementFormComponent
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
-  writeValue(value: SignalementFormValue): void {
+  writeValue(value: SignalementFormValue) {
     this.form.setValue(value);
     this.value = value;
+    this.observations.set(value.observations);
   }
 
   registerOnChange(onChange: OnChangeFn) {
@@ -146,7 +147,7 @@ export class SignalementFormComponent
     }
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
@@ -161,7 +162,7 @@ export class SignalementFormComponent
     return null;
   }
 
-  addObservation(event: MatChipInputEvent): void {
+  addObservation(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
 
     if (value) {
