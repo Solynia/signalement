@@ -66,7 +66,8 @@
       ],
       "@signalement/signalements-page": [
         "libs/signalement/signalements-page/src/index.ts"
-      ]
+      ],
+      "@signalement/ts-utils": ["libs/shared/ts-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

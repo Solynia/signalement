@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { defaultArray } from '@signalement/ts-utils';
 
 export type SideNavListItem = { label: string; url: string };
-const defaultArray = (value: SideNavListItem[] | null) => value ?? [];
 
 @Component({
   selector: 'sg-side-nav-list',
@@ -13,5 +13,5 @@ const defaultArray = (value: SideNavListItem[] | null) => value ?? [];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavListComponent {
-  navItems = input([], { transform: defaultArray });
+  navItems = input([], { transform: defaultArray<SideNavListItem> });
 }

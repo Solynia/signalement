@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { defaultArray } from '@signalement/ts-utils';
 
 export type TableItem = {
   id: string;
@@ -20,7 +21,6 @@ const TABLE_COLUMNS = [
   'sex',
   'email',
 ];
-const defaultArray = (value: TableItem[] | null) => value ?? [];
 
 @Component({
   selector: 'sg-author-table',
@@ -36,6 +36,6 @@ const defaultArray = (value: TableItem[] | null) => value ?? [];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthorTableComponent {
-  data = input([], { transform: defaultArray });
+  data = input([], { transform: defaultArray<TableItem> });
   readonly displayedColumns = TABLE_COLUMNS;
 }

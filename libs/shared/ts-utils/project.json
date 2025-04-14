@@ -1,0 +1,8 @@
+{
+  "name": "ts-utils",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/ts-utils/src",
+  "projectType": "library",
+  "tags": ["app:ng", "scope:shared", "type:utils"],
+  "targets": {}
+}

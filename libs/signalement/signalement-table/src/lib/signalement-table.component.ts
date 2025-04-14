@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { defaultArray } from '@signalement/ts-utils';
 
 export type TableItem = {
   id: string;
@@ -11,7 +12,6 @@ export type TableItem = {
   observationCount: number;
 };
 const TABLE_COLUMNS = ['id', 'description', 'author', 'observationCount'];
-const defaultArray = (value: TableItem[] | null) => value ?? [];
 
 @Component({
   selector: 'sg-signalement-table',
@@ -21,6 +21,6 @@ const defaultArray = (value: TableItem[] | null) => value ?? [];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalementTableComponent {
-  data = input([], { transform: defaultArray });
+  data = input([], { transform: defaultArray<TableItem> });
   readonly displayedColumns = TABLE_COLUMNS;
 }
