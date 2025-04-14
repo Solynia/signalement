@@ -31,25 +31,12 @@ const modelToFormValue = (
 
 const formValueToCreate = (
   value: AuthorDetailsFormValue['author']
-): AuthorCreate => ({
-  first_name: value.first_name,
-  last_name: value.last_name,
-  birth_date: value.birth_date,
-  sex: value.sex,
-  email: value.email,
-});
+): AuthorCreate => value;
 
 const formValueToUpdate = (
   id: string,
   value: AuthorDetailsFormValue['author']
-): AuthorUpdate => ({
-  id,
-  first_name: value.first_name,
-  last_name: value.last_name,
-  birth_date: value.birth_date,
-  sex: value.sex,
-  email: value.email,
-});
+): AuthorUpdate => ({ id, ...value });
 
 export interface AuthorDetailsFormValue {
   author: AuthorFormValue;
@@ -105,19 +92,15 @@ export class AuthorDetailsPageComponent implements OnInit, OnDestroy {
       .select(selectSelectedAuthor)
       .pipe(
         take(1),
-        filter((a) => !a),
+        filter((a) => !!a),
         map((a) =>
-          // a
-          //   ? authorActions.updateAuthor({
-          //       data: formValueToUpdate(
-          //         a.id,
-          //         this.form.getRawValue().author
-          //       ),
-          //     })
-          //   :
-          authorActions.createAuthor({
-            data: formValueToCreate(this.form.getRawValue().author),
-          })
+          a
+            ? authorActions.updateAuthor({
+                data: formValueToUpdate(a.id, this.form.getRawValue().author),
+              })
+            : authorActions.createAuthor({
+                data: formValueToCreate(this.form.getRawValue().author),
+              })
         ),
         tap((action) => this.store.dispatch(action)),
         tap(() => this.router.navigate(['/authors'])),

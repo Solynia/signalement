@@ -39,9 +39,9 @@ export const authorFeature = createFeature({
     on(authorActions.createAuthorSuccess, (state, { data }) =>
       adapter.addOne(data, state)
     ),
-    // on(authorActions.updateAuthorSuccess, (state, { data }) =>
-    //   adapter.updateOne({ id: data.id, changes: data }, state)
-    // ),
+    on(authorActions.updateAuthorSuccess, (state, { data }) =>
+      adapter.updateOne({ id: data.id, changes: data }, state)
+    ),
     on(authorActions.authorSelectionChanged, (state, { id }) =>
       produce(state, (draft) => {
         draft.selectedId = id;

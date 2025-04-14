@@ -51,20 +51,20 @@ export const createAuthor$ = createEffect(
   { functional: true }
 );
 
-// export const updateAuthor$ = createEffect(
-//   (action$ = inject(Actions), authorService = inject(AuthorService)) => {
-//     return action$.pipe(
-//       ofType(authorActions.updateAuthor),
-//       switchMap(({ data }) => authorService.update(data.id, data)),
-//       map((data) => authorActions.updateAuthorSuccess({ data })),
-//       catchError((error) => {
-//         console.error('Error', error);
-//         return of(authorActions.updateAuthorFailure({ error }));
-//       })
-//     );
-//   },
-//   { functional: true }
-// );
+export const updateAuthor$ = createEffect(
+  (action$ = inject(Actions), authorService = inject(AuthorService)) => {
+    return action$.pipe(
+      ofType(authorActions.updateAuthor),
+      switchMap(({ data }) => authorService.update(data.id, data)),
+      map((data) => authorActions.updateAuthorSuccess({ data })),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(authorActions.updateAuthorFailure({ error }));
+      })
+    );
+  },
+  { functional: true }
+);
 
 export const displayLoadSuccessMessage = displaySuccessMessageFactory(
   authorActions.loadAuthorStoreSuccess,
@@ -76,10 +76,10 @@ export const displayCreateSuccessMessage = displaySuccessMessageFactory(
   'Auteur créé.'
 );
 
-// export const displayUpdateSuccessMessage = displaySuccessMessageFactory(
-//   authorActions.updateAuthorSuccess,
-//   'Auteur mis à jour.'
-// );
+export const displayUpdateSuccessMessage = displaySuccessMessageFactory(
+  authorActions.updateAuthorSuccess,
+  'Auteur mis à jour.'
+);
 
 export const displayErrorMessage$ = createEffect(
   (action$ = inject(Actions)) => {

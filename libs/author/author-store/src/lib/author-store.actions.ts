@@ -1,5 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Author, AuthorCreate } from '@signalement/author-service';
+import {
+  Author,
+  AuthorCreate,
+  AuthorUpdate,
+} from '@signalement/author-service';
 
 export const AUTHOR_STORE_FEATURE_KEY = 'author';
 
@@ -12,9 +16,9 @@ export const authorActions = createActionGroup({
     createAuthor: props<{ data: AuthorCreate }>(),
     createAuthorSuccess: props<{ data: Author }>(),
     createAuthorFailure: props<{ error: string }>(),
-    // updateAuthor: props<{ data: AuthorUpdate }>(),
-    // updateAuthorSuccess: props<{ data: Author }>(),
-    // updateAuthorFailure: props<{ error: string }>(),
+    updateAuthor: props<{ data: AuthorUpdate }>(),
+    updateAuthorSuccess: props<{ data: Author }>(),
+    updateAuthorFailure: props<{ error: string }>(),
     authorSelectionChanged: props<{ id: string | undefined }>(),
   },
 });
