@@ -29,6 +29,9 @@
         "libs/author/author-service/src/index.ts"
       ],
       "@signalement/authors-page": ["libs/author/authors-page/src/index.ts"],
+      "@signalement/message-notification": [
+        "libs/shared/message-notification/src/index.ts"
+      ],
       "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
       "@signalement/side-nav-list": ["libs/shared/side-nav-list/src/index.ts"],
       "@signalement/signalement-data-access": [

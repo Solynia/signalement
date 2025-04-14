@@ -13,12 +13,33 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { createSelector, Store } from '@ngrx/store';
+import {
+  MessageNotification,
+  MessageNotificationComponent,
+} from '@signalement/message-notification';
 import {
   SideNavListComponent,
   SideNavListItem,
 } from '@signalement/side-nav-list';
-import { signalementActions } from '@signalement/signalement-store';
+import {
+  selectSignalementError,
+  selectSignalementMessage,
+  signalementActions,
+} from '@signalement/signalement-store';
+
+const selectNotification = createSelector(
+  selectSignalementError,
+  selectSignalementMessage,
+  (error, message): MessageNotification => {
+    if (error) {
+      return { label: error, type: 'error' };
+    } else if (message) {
+      return { label: message, type: 'message' };
+    }
+    return null;
+  }
+);
 
 const navItems: SideNavListItem[] = [
   { label: 'Signalements', url: 'signalements' },
@@ -33,6 +54,7 @@ const navItems: SideNavListItem[] = [
     MatIconModule,
     MatSidenavModule,
     SideNavListComponent,
+    MessageNotificationComponent,
     UpperCasePipe,
   ],
   selector: 'sg-root',
@@ -48,6 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   readonly title = 'signalement';
   readonly navItems = navItems;
+  readonly notification = this.store.selectSignal(selectNotification);
   readonly isMobile = signal(this.mobileQuery.matches);
 
   readonly marginTop = computed(() => (this.isMobile() ? '56' : '0'));
@@ -64,5 +87,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
+  }
+
+  dismissNotification() {
+    this.store.dispatch(signalementActions.messagesDismissed());
   }
 }

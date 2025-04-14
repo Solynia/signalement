@@ -1,0 +1,13 @@
+{
+  "name": "message-notification",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/message-notification/src",
+  "prefix": "sg",
+  "projectType": "library",
+  "tags": ["app:ng", "scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

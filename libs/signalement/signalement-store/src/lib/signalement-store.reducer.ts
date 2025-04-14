@@ -11,6 +11,7 @@ export type SignalementStoreState = EntityState<Signalement> & {
   selectedId: string | undefined;
   loaded: boolean;
   error: string | null;
+  message: string | null;
 };
 
 const adapter = createEntityAdapter<Signalement>();
@@ -18,6 +19,7 @@ const initialState: SignalementStoreState = adapter.getInitialState({
   selectedId: undefined,
   loaded: false,
   error: null,
+  message: null,
 });
 
 export const signalementFeature = createFeature({
@@ -46,6 +48,12 @@ export const signalementFeature = createFeature({
     on(signalementActions.signalementSelectionChanged, (state, { id }) =>
       produce(state, (draft) => {
         draft.selectedId = id;
+      })
+    ),
+    on(signalementActions.messagesDismissed, (state) =>
+      produce(state, (draft) => {
+        draft.error = null;
+        draft.message = null;
       })
     )
   ),

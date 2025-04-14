@@ -28,4 +28,5 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  <sg-message-notification [message]="notification()" (dismiss)="dismissNotification()"/>
 </div>

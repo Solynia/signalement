@@ -10,5 +10,6 @@ export const signalementActions = createActionGroup({
     loadSignalementStoreSuccess: props<{ data: Signalement[] }>(),
     loadSignalementStoreFailure: props<{ error: string }>(),
     signalementSelectionChanged: props<{ id: string | undefined }>(),
+    messagesDismissed: emptyProps(),
   },
 });
