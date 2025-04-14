@@ -1,1 +1,7 @@
-<p>AuthorDetailsPage works!</p>
+<form [formGroup]="form" class="p-5" (ngSubmit)="onSubmit()">
+  <sg-author-form formControlName="author" />
+
+  <button mat-flat-button type="submit">
+    <mat-icon fontIcon="save"></mat-icon>Sauvegarder
+  </button>
+</form>

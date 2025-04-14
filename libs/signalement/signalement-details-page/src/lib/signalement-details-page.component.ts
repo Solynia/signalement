@@ -74,7 +74,7 @@ export interface SignalementDetailsFormValue {
   signalement: SignalementFormValue;
 }
 
-type SignalementForm = {
+type SignalementDetailsForm = {
   [P in keyof SignalementDetailsFormValue]: FormControl<
     SignalementDetailsFormValue[P]
   >;
@@ -98,7 +98,7 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
 
-  readonly form = new FormGroup<SignalementForm>({
+  readonly form = new FormGroup<SignalementDetailsForm>({
     signalement: new FormControl<SignalementFormValue>(modelToFormValue(), {
       nonNullable: true,
     }),
