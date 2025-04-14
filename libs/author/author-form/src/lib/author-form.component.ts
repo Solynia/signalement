@@ -170,6 +170,11 @@ export class AuthorFormComponent
 
   setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
+    if (isDisabled) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
   markAllAsTouched() {

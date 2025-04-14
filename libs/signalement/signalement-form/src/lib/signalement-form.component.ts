@@ -2,6 +2,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
+  effect,
+  input,
   OnDestroy,
   signal,
 } from '@angular/core';
@@ -24,13 +27,29 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AuthorFormComponent, AuthorFormValue } from '@signalement/author-form';
+import { defaultArray } from '@signalement/ts-utils';
 import { produce } from 'immer';
 import { ReplaySubject, takeUntil, tap } from 'rxjs';
+
+type AuthorInput = {
+  id: string;
+  first_name: string;
+  last_name: string;
+};
+
+const authorOptionsFactory = <T extends AuthorInput>(values: T[] | null) =>
+  defaultArray(values).map(({ id, first_name, last_name }) => ({
+    id,
+    label: `${first_name} ${last_name}`,
+  }));
 
 export interface SignalementFormValue {
   description: string;
   observations: ObservationChip[];
+  authorId: string;
   author: AuthorFormValue;
 }
 
@@ -48,6 +67,8 @@ type ObservationChip = { id?: string; name: string };
   selector: 'sg-signalement-form',
   imports: [
     ReactiveFormsModule,
+    MatSlideToggleModule,
+    MatSelectModule,
     MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
@@ -73,6 +94,10 @@ type ObservationChip = { id?: string; name: string };
 export class SignalementFormComponent
   implements ControlValueAccessor, Validator, AfterViewInit, OnDestroy
 {
+  authors = input([], {
+    transform: authorOptionsFactory<AuthorInput>,
+  });
+  readonly checked = signal(true);
   readonly observations = signal<ObservationChip[]>([]);
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
@@ -85,6 +110,9 @@ export class SignalementFormComponent
     observations: new FormControl([], {
       nonNullable: true,
     }),
+    authorId: new FormControl('', {
+      nonNullable: true,
+    }),
     author: new FormControl(
       {
         first_name: '',
@@ -95,7 +123,6 @@ export class SignalementFormComponent
       },
       {
         nonNullable: true,
-        validators: [Validators.required],
       }
     ),
   });
@@ -152,6 +179,11 @@ export class SignalementFormComponent
 
   setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
+    if (isDisabled) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
   markAllAsTouched() {
@@ -164,6 +196,28 @@ export class SignalementFormComponent
     }
     return null;
   }
+
+  //#region toggle check
+  readonly checkLabel = computed(() =>
+    this.checked() ? 'Auteur existant' : 'Nouvel Auteur'
+  );
+
+  onCheckChange = effect(() => {
+    if (this.checked()) {
+      this.form.controls.authorId.enable();
+      this.form.controls.authorId.addValidators(Validators.required);
+      this.form.controls.author.disable();
+      this.form.controls.author.removeValidators(Validators.required);
+    } else {
+      this.form.controls.authorId.disable();
+      this.form.controls.author.addValidators(Validators.required);
+      this.form.controls.author.enable();
+      this.form.controls.authorId.removeValidators(Validators.required);
+    }
+    // trigger validation check
+    this.form.setValue(this.form.getRawValue());
+  });
+  //#endregion toggle check
 
   //#region observation chips
   addObservation(event: MatChipInputEvent) {

@@ -7,7 +7,36 @@
     }
   </mat-form-field>
 
+  <div class="grid grid-cols-3 gap-5">
+    <mat-slide-toggle
+      class="mt-[10px]"
+      [checked]="checked()"
+      (change)="checked.set($event.checked)"
+    >
+      {{ checkLabel() }}
+    </mat-slide-toggle>
+
+    @if (checked()) {
+    <mat-form-field>
+      <mat-label>Auteur</mat-label>
+      <mat-select formControlName="authorId">
+        @for (author of authors(); track author) {
+        <mat-option
+          [value]="author.id"
+          >{{ author.label }}</mat-option
+        >
+        }
+      </mat-select>
+      @if (form.controls.authorId.hasError('required')) {
+      <mat-error>Champ obligatoire</mat-error>
+      }
+    </mat-form-field>
+    }
+  </div>
+
+  @if (!checked()) {
   <sg-author-form formControlName="author" />
+  }
 
   <mat-form-field>
     <mat-label>Observations</mat-label>

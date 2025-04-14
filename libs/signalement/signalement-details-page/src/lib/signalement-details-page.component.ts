@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { selectAuthors } from '@signalement/author-store';
 import {
   SignalementFormComponent,
   SignalementFormValue,
@@ -30,6 +31,7 @@ const modelToFormValue = (
 ): SignalementDetailsFormValue['signalement'] => ({
   description: signalement?.description ?? '',
   observations: signalement?.observations ?? [],
+  authorId: signalement?.author.id ?? '',
   author: {
     first_name: signalement?.author.first_name ?? '',
     last_name: signalement?.author.last_name ?? '',
@@ -44,6 +46,7 @@ const formValueToCreate = (
 ): SignalementCreate => ({
   description: value.description,
   author: {
+    id: value.authorId,
     first_name: value.author.first_name,
     last_name: value.author.last_name,
     birth_date: value.author.birth_date,
@@ -61,6 +64,7 @@ const formValueToUpdate = (
 
   description: value.description,
   author: {
+    id: value.authorId,
     first_name: value.author.first_name,
     last_name: value.author.last_name,
     birth_date: value.author.birth_date,
@@ -98,6 +102,7 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
 
+  readonly authors = this.store.selectSignal(selectAuthors);
   readonly form = new FormGroup<SignalementDetailsForm>({
     signalement: new FormControl<SignalementFormValue>(modelToFormValue(), {
       nonNullable: true,
