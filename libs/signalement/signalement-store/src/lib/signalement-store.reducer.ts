@@ -10,16 +10,12 @@ import {
 export type SignalementStoreState = EntityState<Signalement> & {
   selectedId: string | undefined;
   loaded: boolean;
-  error: string | null;
-  message: string | null;
 };
 
 const adapter = createEntityAdapter<Signalement>();
 const initialState: SignalementStoreState = adapter.getInitialState({
   selectedId: undefined,
   loaded: false,
-  error: null,
-  message: null,
 });
 
 export const signalementFeature = createFeature({
@@ -29,7 +25,6 @@ export const signalementFeature = createFeature({
     on(signalementActions.initSignalementStore, (state) =>
       produce(state, (draft) => {
         draft.loaded = false;
-        draft.error = null;
       })
     ),
     on(signalementActions.loadSignalementStoreSuccess, (state, { data }) =>
@@ -40,46 +35,15 @@ export const signalementFeature = createFeature({
         })
       )
     ),
-    on(signalementActions.loadSignalementStoreFailure, (state, { error }) =>
-      produce(state, (draft) => {
-        draft.error = error;
-      })
-    ),
     on(signalementActions.createSignalementSuccess, (state, { data }) =>
-      adapter.addOne(
-        data,
-        produce(state, (draft) => {
-          draft.message = 'Signalement ajouté avec succès';
-        })
-      )
-    ),
-    on(signalementActions.createSignalementFailure, (state, { error }) =>
-      produce(state, (draft) => {
-        draft.error = error;
-      })
+      adapter.addOne(data, state)
     ),
     // on(signalementActions.updateSignalementSuccess, (state, { data }) =>
-    //   adapter.updateOne(
-    //     { id: data.id, changes: data },
-    //     produce(state, (draft) => {
-    //       draft.message = 'Signalement modifié avec succès';
-    //     })
-    //   )
-    // ),
-    // on(signalementActions.updateSignalementFailure, (state, { error }) =>
-    //   produce(state, (draft) => {
-    //     draft.error = error;
-    //   })
+    //   adapter.updateOne({ id: data.id, changes: data }, state)
     // ),
     on(signalementActions.signalementSelectionChanged, (state, { id }) =>
       produce(state, (draft) => {
         draft.selectedId = id;
-      })
-    ),
-    on(signalementActions.messagesDismissed, (state) =>
-      produce(state, (draft) => {
-        draft.error = null;
-        draft.message = null;
       })
     )
   ),

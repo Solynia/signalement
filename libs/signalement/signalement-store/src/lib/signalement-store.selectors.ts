@@ -6,8 +6,6 @@ export const {
   selectIds: selectSignalementIds,
   selectSelectedId: selectSelectedSignalementId,
   selectLoaded: selectSignalementLoaded,
-  selectError: selectSignalementError,
-  selectMessage: selectSignalementMessage,
   selectSignalementState,
 } = signalementFeature;
 

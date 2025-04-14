@@ -6,7 +6,6 @@ export const {
   selectIds: selectAuthorIds,
   selectSelectedId: selectSelectedAuthorId,
   selectLoaded: selectAuthorLoaded,
-  selectError: selectAuthorError,
   selectAuthorState,
 } = authorFeature;
 

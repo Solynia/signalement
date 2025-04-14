@@ -10,14 +10,12 @@ import {
 export type AuthorStoreState = EntityState<Author> & {
   selectedId: string | undefined;
   loaded: boolean;
-  error: string | null;
 };
 
 const adapter = createEntityAdapter<Author>();
 const initialState: AuthorStoreState = adapter.getInitialState({
   selectedId: undefined,
   loaded: false,
-  error: null,
 });
 
 export const authorFeature = createFeature({
@@ -27,7 +25,6 @@ export const authorFeature = createFeature({
     on(authorActions.initAuthorStore, (state) =>
       produce(state, (draft) => {
         draft.loaded = false;
-        draft.error = null;
       })
     ),
     on(authorActions.loadAuthorStoreSuccess, (state, { data }) =>
@@ -38,26 +35,12 @@ export const authorFeature = createFeature({
         })
       )
     ),
-    on(authorActions.loadAuthorStoreFailure, (state, { error }) =>
-      produce(state, (draft) => {
-        draft.error = error;
-      })
-    ),
+
     on(authorActions.createAuthorSuccess, (state, { data }) =>
       adapter.addOne(data, state)
     ),
-    on(authorActions.createAuthorFailure, (state, { error }) =>
-      produce(state, (draft) => {
-        draft.error = error;
-      })
-    ),
     // on(authorActions.updateAuthorSuccess, (state, { data }) =>
     //   adapter.updateOne({ id: data.id, changes: data }, state)
-    // ),
-    // on(authorActions.updateAuthorFailure, (state, { error }) =>
-    //   produce(state, (draft) => {
-    //     draft.error = error;
-    //   })
     // ),
     on(authorActions.authorSelectionChanged, (state, { id }) =>
       produce(state, (draft) => {

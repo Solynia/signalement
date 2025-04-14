@@ -20,18 +20,19 @@ import {
   MessageNotificationComponent,
 } from '@signalement/message-notification';
 import {
+  messageActions,
+  selectError,
+  selectMessage,
+} from '@signalement/message-store';
+import {
   SideNavListComponent,
   SideNavListItem,
 } from '@signalement/side-nav-list';
-import {
-  selectSignalementError,
-  selectSignalementMessage,
-  signalementActions,
-} from '@signalement/signalement-store';
+import { signalementActions } from '@signalement/signalement-store';
 
 const selectNotification = createSelector(
-  selectSignalementError,
-  selectSignalementMessage,
+  selectError,
+  selectMessage,
   (error, message): MessageNotification => {
     if (error) {
       return { label: error, type: 'error' };
@@ -92,6 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   dismissNotification() {
-    this.store.dispatch(signalementActions.messagesDismissed());
+    this.store.dispatch(messageActions.messagesDismissed());
   }
 }

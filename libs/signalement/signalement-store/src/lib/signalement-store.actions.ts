@@ -19,6 +19,5 @@ export const signalementActions = createActionGroup({
     // updateSignalementSuccess: props<{ data: Signalement }>(),
     // updateSignalementFailure: props<{ error: string }>(),
     signalementSelectionChanged: props<{ id: string | undefined }>(),
-    messagesDismissed: emptyProps(),
   },
 });
