@@ -1,5 +1,7 @@
 <form [formGroup]="form" class="p-5" (ngSubmit)="onSubmit()">
   <sg-signalement-form formControlName="signalement" />
 
-  <button mat-flat-button type="submit">Sauvegarder</button>
+  <button mat-flat-button type="submit">
+    <mat-icon fontIcon="save"></mat-icon>Sauvegarder
+  </button>
 </form>

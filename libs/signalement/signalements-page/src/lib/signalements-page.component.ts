@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 import { createSelector, Store } from '@ngrx/store';
 import { selectSignalements } from '@signalement/signalement-store';
 import {
@@ -18,7 +21,12 @@ const pouet = createSelector(selectSignalements, (signalements) =>
 
 @Component({
   selector: 'sg-signalements-page',
-  imports: [SignalementTableComponent],
+  imports: [
+    SignalementTableComponent,
+    RouterLink,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './signalements-page.component.html',
   styleUrl: './signalements-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import {
   SignalementFormComponent,
@@ -42,7 +43,12 @@ type SignalementForm = {
 
 @Component({
   selector: 'sg-signalement-details-page',
-  imports: [ReactiveFormsModule, MatButtonModule, SignalementFormComponent],
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    SignalementFormComponent,
+  ],
   templateUrl: './signalement-details-page.component.html',
   styleUrl: './signalement-details-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

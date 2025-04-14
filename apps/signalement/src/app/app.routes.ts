@@ -13,7 +13,15 @@ export const appRoutes: Route[] = [
       import('@signalement/author-details-page').then(
         (c) => c.AuthorDetailsPageComponent
       ),
-    title: 'Author | Signalement',
+    title: 'Edit author | Signalement',
+  },
+  {
+    path: 'authors/new',
+    loadComponent: () =>
+      import('@signalement/author-details-page').then(
+        (c) => c.AuthorDetailsPageComponent
+      ),
+    title: 'New author | Signalement',
   },
   {
     path: 'signalements',
@@ -29,7 +37,15 @@ export const appRoutes: Route[] = [
       import('@signalement/signalement-details-page').then(
         (c) => c.SignalementDetailsPageComponent
       ),
-    title: 'Signalement | Signalement',
+    title: 'Edit signalement | Signalement',
+  },
+  {
+    path: 'signalements/new',
+    loadComponent: () =>
+      import('@signalement/signalement-details-page').then(
+        (c) => c.SignalementDetailsPageComponent
+      ),
+    title: 'New signalement | Signalement',
   },
   {
     path: '',

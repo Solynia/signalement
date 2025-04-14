@@ -1,1 +1,9 @@
-<sg-signalement-table [data]="signalements()" />
+<section class="p-5 grid grid-cols-1 gap-5">
+  <div>
+    <a mat-flat-button [routerLink]="['/signalements/new']">
+      <mat-icon fontIcon="add"></mat-icon>
+      Ajouter
+    </a>
+  </div>
+  <sg-signalement-table [data]="signalements()" />
+</section>
