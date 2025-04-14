@@ -25,7 +25,7 @@
   <tr
     mat-row
     *matRowDef="let row; columns: displayedColumns"
-    [routerLink]="`/signalements/${row.id}`"
+    [routerLink]="`/signalements/edit/${row.id}`"
     class="cursor-pointer hover:bg-gray-200"
   ></tr>
 </table>

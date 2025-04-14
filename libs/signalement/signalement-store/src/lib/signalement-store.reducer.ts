@@ -42,6 +42,11 @@ export const signalementFeature = createFeature({
       produce(state, (draft) => {
         draft.error = error;
       })
+    ),
+    on(signalementActions.signalementSelectionChanged, (state, { id }) =>
+      produce(state, (draft) => {
+        draft.selectedId = id;
+      })
     )
   ),
 });

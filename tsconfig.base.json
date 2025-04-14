@@ -43,6 +43,9 @@
       "@signalement/signalement-form": [
         "libs/signalement/signalement-form/src/index.ts"
       ],
+      "@signalement/signalement-route-guards": [
+        "libs/signalement/signalement-route-guards/src/index.ts"
+      ],
       "@signalement/signalement-service": [
         "libs/signalement/signalement-service/src/index.ts"
       ],
