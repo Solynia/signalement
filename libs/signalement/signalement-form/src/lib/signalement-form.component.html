@@ -1,12 +1,12 @@
-<section [formGroup]="form" class="p-5 flex flex-col">
-  <mat-form-field class="px-5 pt-5">
+<section [formGroup]="form" class="flex flex-col gap-5">
+  <mat-form-field>
     <mat-label>Description</mat-label>
     <input matInput formControlName="description" />
   </mat-form-field>
 
   <sg-author-form formControlName="author" />
 
-  <mat-form-field class="px-5 pb-5">
+  <mat-form-field>
     <mat-label>Observations</mat-label>
     <mat-chip-grid
       class="mat-mdc-chip-set-stacked"
@@ -16,9 +16,9 @@
     >
       @for (observation of observations(); track observation) {
       <mat-chip-row
-      [editable]="true"
-      (edited)="editObservation($event, observation)"
-      (removed)="removeObservation(observation)"
+        [editable]="true"
+        (edited)="editObservation($event, observation)"
+        (removed)="removeObservation(observation)"
       >
         {{ observation }}
         <button
