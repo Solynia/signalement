@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { createSelector, Store } from '@ngrx/store';
+import { authorActions } from '@signalement/author-store';
 import {
   MessageNotification,
   MessageNotificationComponent,
@@ -82,6 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.store.dispatch(authorActions.initAuthorStore());
     this.store.dispatch(signalementActions.initSignalementStore());
   }
 

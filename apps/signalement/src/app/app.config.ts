@@ -10,6 +10,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { authorEffects, authorFeature } from '@signalement/author-store';
 import {
   signalementEffects,
   signalementFeature,
@@ -23,8 +24,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideStore({ router: routerReducer }),
     provideRouterStore(),
+    provideState(authorFeature),
     provideState(signalementFeature),
-    provideEffects([signalementEffects]),
+    provideEffects([authorEffects, signalementEffects]),
     provideStoreDevtools({ logOnly: !isDevMode() }),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,

@@ -3,13 +3,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { createSelector, Store } from '@ngrx/store';
-import { AuthorTableComponent } from '@signalement/author-table';
+import { selectAuthors } from '@signalement/author-store';
+import { AuthorTableComponent, TableItem } from '@signalement/author-table';
 
-// const selectData = createSelector(selectAuthors, (authors) =>
-//   authors.map<TableItem>((a) => a)
-// );
-
-const selectData = createSelector(() => []);
+const selectData = createSelector(selectAuthors, (authors) =>
+  authors.map<TableItem>((a) => a)
+);
 
 @Component({
   selector: 'sg-authors-page',
