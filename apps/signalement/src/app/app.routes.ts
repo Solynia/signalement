@@ -1,5 +1,9 @@
 import { Route } from '@angular/router';
 import {
+  canAuthorIdFlush,
+  canAuthorIdSync,
+} from '@signalement/author-route-guards';
+import {
   canSignalementIdFlush,
   canSignalementIdSync,
 } from '@signalement/signalement-route-guards';
@@ -23,6 +27,8 @@ export const appRoutes: Route[] = [
             (c) => c.AuthorDetailsPageComponent
           ),
         title: 'Edit author | Signalement',
+        canActivate: [canAuthorIdSync],
+        canDeactivate: [canAuthorIdFlush],
       },
       {
         path: 'new',
@@ -31,6 +37,8 @@ export const appRoutes: Route[] = [
             (c) => c.AuthorDetailsPageComponent
           ),
         title: 'New author | Signalement',
+        canActivate: [canAuthorIdSync],
+        canDeactivate: [canAuthorIdFlush],
       },
     ],
   },
