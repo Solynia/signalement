@@ -8,14 +8,22 @@ import {
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   SignalementFormComponent,
   SignalementFormValue,
 } from '@signalement/signalement-form';
-import { Signalement } from '@signalement/signalement-service';
-import { selectSelectedSignalement } from '@signalement/signalement-store';
-import { ReplaySubject, takeUntil, tap } from 'rxjs';
+import {
+  Signalement,
+  SignalementCreate,
+  SignalementUpdate,
+} from '@signalement/signalement-service';
+import {
+  selectSelectedSignalement,
+  signalementActions,
+} from '@signalement/signalement-store';
+import { filter, map, ReplaySubject, take, takeUntil, tap } from 'rxjs';
 
 const modelToFormValue = (
   signalement?: Signalement
@@ -29,6 +37,37 @@ const modelToFormValue = (
     sex: signalement?.author.sex ?? '',
     email: signalement?.author.email ?? '',
   },
+});
+
+const formValueToCreate = (
+  value: SignalementDetailsFormValue['signalement']
+): SignalementCreate => ({
+  description: value.description,
+  author: {
+    first_name: value.author.first_name,
+    last_name: value.author.last_name,
+    birth_date: value.author.birth_date,
+    sex: value.author.sex,
+    email: value.author.email,
+  },
+  observations: value.observations.map((name) => ({ name })),
+});
+
+const formValueToUpdate = (
+  id: string,
+  value: SignalementDetailsFormValue['signalement']
+): SignalementUpdate => ({
+  id,
+
+  description: value.description,
+  author: {
+    first_name: value.author.first_name,
+    last_name: value.author.last_name,
+    birth_date: value.author.birth_date,
+    sex: value.author.sex,
+    email: value.author.email,
+  },
+  observations: value.observations.map((name) => ({ name })),
 });
 
 export interface SignalementDetailsFormValue {
@@ -54,6 +93,7 @@ type SignalementForm = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
+  private readonly router = inject(Router);
   private readonly store = inject(Store);
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
@@ -82,6 +122,28 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    throw new Error('Method not implemented.');
+    this.store
+      .select(selectSelectedSignalement)
+      .pipe(
+        take(1),
+        filter((s) => !s),
+        map((s) =>
+          // s
+          //   ? signalementActions.updateSignalement({
+          //       data: formValueToUpdate(
+          //         s.id,
+          //         this.form.getRawValue().signalement
+          //       ),
+          //     })
+          //   :
+          signalementActions.createSignalement({
+            data: formValueToCreate(this.form.getRawValue().signalement),
+          })
+        ),
+        tap((action) => this.store.dispatch(action)),
+        tap(() => this.router.navigate(['/signalements'])),
+        takeUntil(this.destroyed$)
+      )
+      .subscribe();
   }
 }
