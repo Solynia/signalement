@@ -2,11 +2,21 @@
   <mat-form-field [floatLabel]="'always'">
     <mat-label>Prénom</mat-label>
     <input matInput formControlName="first_name" />
+    @if (form.controls.first_name.hasError('required') ) {
+    <mat-error>Champ obligatoire</mat-error>
+    } @if (form.controls.first_name.hasError('maxlength')) {
+    <mat-error>Longueur maximum de 50 caractères</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Nom</mat-label>
     <input matInput formControlName="last_name" />
+    @if (form.controls.last_name.hasError('required')) {
+    <mat-error>Champ obligatoire</mat-error>
+    } @if (form.controls.last_name.hasError('maxlength')) {
+    <mat-error>Longueur maximum de 50 caractères</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field>
@@ -20,6 +30,11 @@
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker" />
     <mat-datepicker #picker></mat-datepicker>
+    @if (form.controls.birth_date.hasError('required')) {
+    <mat-error>Champ obligatoire</mat-error>
+    } @if (form.controls.birth_date.hasError('age')) {
+    <mat-error>Age supérieur à 100ans</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field>
@@ -29,11 +44,18 @@
       <mat-option [value]="sex">{{ sex | titlecase }}</mat-option>
       }
     </mat-select>
+    @if (form.controls.sex.hasError('required')) {
+    <mat-error>Champ obligatoire</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input matInput formControlName="email" />
+    @if (form.controls.email.hasError('required')) {
+    <mat-error>Champ obligatoire</mat-error>
+    } @if (form.controls.email.hasError('email')) {
+    <mat-error>Email invalide</mat-error>
+    }
   </mat-form-field>
-
 </section>

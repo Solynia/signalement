@@ -6,6 +6,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormControl,
   FormGroup,
@@ -14,6 +15,7 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -24,6 +26,23 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReplaySubject, takeUntil, tap } from 'rxjs';
 
 const SEXES = ['Homme', 'Femme', 'Non-binaire'];
+
+const getMinDate = () => {
+  const today = new Date();
+  return new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+};
+
+const hundredYearsValidator: ValidatorFn = (
+  control: AbstractControl<Date | null>
+): ValidationErrors | null => {
+  const value = control.value;
+  if (!value) {
+    return null;
+  }
+  const limit = getMinDate();
+  const valid = value >= limit;
+  return valid ? null : { age: true };
+};
 
 export interface AuthorFormValue {
   first_name: string;
@@ -72,11 +91,7 @@ export class AuthorFormComponent
   implements ControlValueAccessor, Validator, AfterViewInit, OnDestroy
 {
   maxDate = new Date();
-  minDate = new Date(
-    this.maxDate.getFullYear() - 100,
-    this.maxDate.getMonth(),
-    this.maxDate.getDate()
-  );
+  minDate = getMinDate();
   sexes = SEXES;
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
@@ -92,7 +107,7 @@ export class AuthorFormComponent
     }),
     birth_date: new FormControl(new Date(), {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, hundredYearsValidator],
     }),
     sex: new FormControl('', {
       nonNullable: true,

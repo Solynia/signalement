@@ -2,6 +2,9 @@
   <mat-form-field>
     <mat-label>Description</mat-label>
     <input matInput formControlName="description" />
+    @if (form.controls.description.hasError('required')) {
+    <mat-error>Champ obligatoire</mat-error>
+    }
   </mat-form-field>
 
   <sg-author-form formControlName="author" />
