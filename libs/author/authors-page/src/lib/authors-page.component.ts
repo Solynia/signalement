@@ -1,10 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { createSelector, Store } from '@ngrx/store';
+import { AuthorTableComponent } from '@signalement/author-table';
+
+// const selectData = createSelector(selectAuthors, (authors) =>
+//   authors.map<TableItem>((a) => a)
+// );
+
+const selectData = createSelector(() => []);
 
 @Component({
   selector: 'sg-authors-page',
-  imports: [],
+  imports: [AuthorTableComponent, RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './authors-page.component.html',
   styleUrl: './authors-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorsPageComponent {}
+export class AuthorsPageComponent {
+  private readonly store = inject(Store);
+  authors = this.store.selectSignal(selectData);
+}

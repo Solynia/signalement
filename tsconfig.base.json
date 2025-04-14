@@ -28,6 +28,7 @@
       "@signalement/author-service": [
         "libs/author/author-service/src/index.ts"
       ],
+      "@signalement/author-table": ["libs/author/author-table/src/index.ts"],
       "@signalement/authors-page": ["libs/author/authors-page/src/index.ts"],
       "@signalement/message-notification": [
         "libs/shared/message-notification/src/index.ts"

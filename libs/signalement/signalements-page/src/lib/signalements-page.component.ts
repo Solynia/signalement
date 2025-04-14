@@ -9,7 +9,7 @@ import {
   TableItem,
 } from '@signalement/signalement-table';
 
-const pouet = createSelector(selectSignalements, (signalements) =>
+const selectData = createSelector(selectSignalements, (signalements) =>
   signalements.map<TableItem>((s) => ({
     id: s.id,
     description: s.description,
@@ -33,5 +33,5 @@ const pouet = createSelector(selectSignalements, (signalements) =>
 })
 export class SignalementsPageComponent {
   private readonly store = inject(Store);
-  signalements = this.store.selectSignal(pouet);
+  signalements = this.store.selectSignal(selectData);
 }

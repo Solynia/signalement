@@ -1,0 +1,13 @@
+{
+  "name": "author-table",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/author/author-table/src",
+  "prefix": "sg",
+  "projectType": "library",
+  "tags": ["app:ng", "scope:author", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<table mat-table [dataSource]="data()" class="w-full" aria-label="Elements">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="first_name">
+    <th mat-header-cell *matHeaderCellDef>Prénom</th>
+    <td mat-cell *matCellDef="let row">{{ row.first_name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="last_name">
+    <th mat-header-cell *matHeaderCellDef>Nom</th>
+    <td mat-cell *matCellDef="let row">{{ row.last_name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="birth_date">
+    <th mat-header-cell *matHeaderCellDef>Date de naissance</th>
+    <td mat-cell *matCellDef="let row">{{ row.birth_date | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sex">
+    <th mat-header-cell *matHeaderCellDef>Sexe</th>
+    <td mat-cell *matCellDef="let row">{{ row.sex | titlecase }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    [routerLink]="`/authors/edit/${row.id}`"
+    class="cursor-pointer hover:bg-gray-200"
+  ></tr>
+</table>

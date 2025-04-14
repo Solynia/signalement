@@ -1,1 +1,9 @@
-<p>AuthorsPage works!</p>
+<section class="p-5 grid grid-cols-1 gap-5">
+  <div>
+    <a mat-flat-button [routerLink]="['/authors/new']">
+      <mat-icon fontIcon="add"></mat-icon>
+      Ajouter
+    </a>
+  </div>
+  <sg-author-table [data]="authors()" />
+</section>
