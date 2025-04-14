@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ActionCreator } from '@ngrx/store';
+import { authorActions } from '@signalement/author-store';
 import { messageActions } from '@signalement/message-store';
 import { SignalementService } from '@signalement/signalement-service';
 import { catchError, map, of, switchMap } from 'rxjs';
@@ -27,7 +28,10 @@ export const init$ = createEffect(
     signalementService = inject(SignalementService)
   ) => {
     return action$.pipe(
-      ofType(signalementActions.initSignalementStore),
+      ofType(
+        signalementActions.initSignalementStore,
+        authorActions.updateAuthorSuccess
+      ),
       switchMap(() => signalementService.findAll()),
       map((data) => signalementActions.loadSignalementStoreSuccess({ data })),
       catchError((error) => {
