@@ -11,6 +11,7 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authorEffects, authorFeature } from '@signalement/author-store';
+import { messageFeature } from '@signalement/message-store';
 import {
   signalementEffects,
   signalementFeature,
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({ router: routerReducer }),
     provideRouterStore(),
     provideState(authorFeature),
+    provideState(messageFeature),
     provideState(signalementFeature),
     provideEffects([authorEffects, signalementEffects]),
     provideStoreDevtools({ logOnly: !isDevMode() }),

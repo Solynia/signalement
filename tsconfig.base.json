@@ -34,6 +34,7 @@
       "@signalement/message-notification": [
         "libs/shared/message-notification/src/index.ts"
       ],
+      "@signalement/message-store": ["libs/shared/message-store/src/index.ts"],
       "@signalement/prisma-client": ["libs/shared/prisma-client/src/index.ts"],
       "@signalement/side-nav-list": ["libs/shared/side-nav-list/src/index.ts"],
       "@signalement/signalement-data-access": [
