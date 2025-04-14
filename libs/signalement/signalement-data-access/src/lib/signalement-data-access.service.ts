@@ -42,10 +42,8 @@ export class SignalementDataAccessService {
       data: {
         ...data,
         author: {
-          connectOrCreate: {
-            where: { id: author.email },
-            create: author,
-          },
+          ...('id' in author && { connect: { id: author.id } }),
+          ...(!('id' in author) && { create: author }),
         },
         observations: { createMany: { data: observations } },
       },

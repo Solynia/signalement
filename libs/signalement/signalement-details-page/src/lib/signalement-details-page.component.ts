@@ -46,7 +46,7 @@ const formValueToCreate = (
 ): SignalementCreate => ({
   description: value.description,
   author: {
-    id: value.authorId,
+    ...(value.authorId && { id: value.authorId }),
     first_name: value.author.first_name,
     last_name: value.author.last_name,
     birth_date: value.author.birth_date,
