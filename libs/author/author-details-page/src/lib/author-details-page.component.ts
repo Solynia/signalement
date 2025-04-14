@@ -88,6 +88,11 @@ export class AuthorDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.form.updateValueAndValidity();
+    if (this.form.invalid) {
+      return;
+    }
+
     this.store
       .select(selectSelectedAuthor)
       .pipe(
