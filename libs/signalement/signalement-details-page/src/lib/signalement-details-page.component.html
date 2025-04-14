@@ -1,1 +1,5 @@
-<p>SignalementDetailsPage works!</p>
+<form [formGroup]="form" class="p-5" (ngSubmit)="onSubmit()">
+  <sg-signalement-form formControlName="signalement" />
+
+  <button mat-flat-button type="submit">Sauvegarder</button>
+</form>
