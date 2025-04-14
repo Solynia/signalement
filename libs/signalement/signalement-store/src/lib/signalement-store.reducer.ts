@@ -38,9 +38,9 @@ export const signalementFeature = createFeature({
     on(signalementActions.createSignalementSuccess, (state, { data }) =>
       adapter.addOne(data, state)
     ),
-    // on(signalementActions.updateSignalementSuccess, (state, { data }) =>
-    //   adapter.updateOne({ id: data.id, changes: data }, state)
-    // ),
+    on(signalementActions.updateSignalementSuccess, (state, { data }) =>
+      adapter.updateOne({ id: data.id, changes: data }, state)
+    ),
     on(signalementActions.signalementSelectionChanged, (state, { id }) =>
       produce(state, (draft) => {
         draft.selectedId = id;

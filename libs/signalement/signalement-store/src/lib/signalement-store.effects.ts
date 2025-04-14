@@ -61,23 +61,23 @@ export const createSignalement$ = createEffect(
   { functional: true }
 );
 
-// export const updateSignalement$ = createEffect(
-//   (
-//     action$ = inject(Actions),
-//     signalementService = inject(SignalementService)
-//   ) => {
-//     return action$.pipe(
-//       ofType(signalementActions.updateSignalement),
-//       switchMap(({ data }) => signalementService.update(data.id, data)),
-//       map((data) => signalementActions.updateSignalementSuccess({ data })),
-//       catchError((error) => {
-//         console.error('Error', error);
-//         return of(signalementActions.updateSignalementFailure({ error }));
-//       })
-//     );
-//   },
-//   { functional: true }
-// );
+export const updateSignalement$ = createEffect(
+  (
+    action$ = inject(Actions),
+    signalementService = inject(SignalementService)
+  ) => {
+    return action$.pipe(
+      ofType(signalementActions.updateSignalement),
+      switchMap(({ data }) => signalementService.update(data.id, data)),
+      map((data) => signalementActions.updateSignalementSuccess({ data })),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(signalementActions.updateSignalementFailure({ error }));
+      })
+    );
+  },
+  { functional: true }
+);
 
 export const displayLoadSuccessMessage = displaySuccessMessageFactory(
   signalementActions.loadSignalementStoreSuccess,
@@ -89,18 +89,18 @@ export const displayCreateSuccessMessage = displaySuccessMessageFactory(
   'Signalement créé.'
 );
 
-// export const displayUpdateSuccessMessage = displaySuccessMessageFactory(
-//   signalementActions.updateSignalementSuccess,
-//   'Signalement mis à jour.'
-// );
+export const displayUpdateSuccessMessage = displaySuccessMessageFactory(
+  signalementActions.updateSignalementSuccess,
+  'Signalement mis à jour.'
+);
 
 export const displayErrorMessage$ = createEffect(
   (action$ = inject(Actions)) => {
     return action$.pipe(
       ofType(
         signalementActions.loadSignalementStoreFailure,
-        signalementActions.createSignalementFailure
-        // signalementActions.updateSignalementFailure
+        signalementActions.createSignalementFailure,
+        signalementActions.updateSignalementFailure
       ),
       map(({ error }) => messageActions.errorEmitted({ error }))
     );

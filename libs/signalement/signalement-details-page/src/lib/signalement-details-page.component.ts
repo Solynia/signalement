@@ -136,19 +136,18 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
       .select(selectSelectedSignalement)
       .pipe(
         take(1),
-        filter((s) => !s),
+        filter((s) => !!s),
         map((s) =>
-          // s
-          //   ? signalementActions.updateSignalement({
-          //       data: formValueToUpdate(
-          //         s.id,
-          //         this.form.getRawValue().signalement
-          //       ),
-          //     })
-          //   :
-          signalementActions.createSignalement({
-            data: formValueToCreate(this.form.getRawValue().signalement),
-          })
+          s
+            ? signalementActions.updateSignalement({
+                data: formValueToUpdate(
+                  s.id,
+                  this.form.getRawValue().signalement
+                ),
+              })
+            : signalementActions.createSignalement({
+                data: formValueToCreate(this.form.getRawValue().signalement),
+              })
         ),
         tap((action) => this.store.dispatch(action)),
         tap(() => this.router.navigate(['/signalements'])),
