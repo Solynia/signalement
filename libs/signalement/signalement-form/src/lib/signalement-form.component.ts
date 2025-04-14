@@ -25,11 +25,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthorFormComponent, AuthorFormValue } from '@signalement/author-form';
+import { produce } from 'immer';
 import { ReplaySubject, takeUntil, tap } from 'rxjs';
 
 export interface SignalementFormValue {
   description: string;
-  observations: string[];
+  observations: ObservationChip[];
   author: AuthorFormValue;
 }
 
@@ -40,6 +41,8 @@ type SignalementForm = {
 type OnChangeFn = (value: SignalementFormValue | null) => void;
 
 type OnTouchedFn = () => void;
+
+type ObservationChip = { id?: string; name: string };
 
 @Component({
   selector: 'sg-signalement-form',
@@ -70,7 +73,7 @@ type OnTouchedFn = () => void;
 export class SignalementFormComponent
   implements ControlValueAccessor, Validator, AfterViewInit, OnDestroy
 {
-  readonly observations = signal<string[]>([]);
+  readonly observations = signal<ObservationChip[]>([]);
 
   private readonly destroyed$ = new ReplaySubject<void>(1);
 
@@ -162,17 +165,19 @@ export class SignalementFormComponent
     return null;
   }
 
+  //#region observation chips
   addObservation(event: MatChipInputEvent) {
-    const value = (event.value || '').trim();
+    const name = (event.value || '').trim();
 
-    if (value) {
-      this.observations.update((observations) => [...observations, value]);
+    if (name) {
+      this.observations.update((observations) => [...observations, { name }]);
     }
 
     event.chipInput.clear();
+    this.updateObservationControl();
   }
 
-  editObservation(event: MatChipEditedEvent, observation: string) {
+  editObservation(event: MatChipEditedEvent, observation: ObservationChip) {
     const value = event.value.trim();
 
     if (!value) {
@@ -181,18 +186,26 @@ export class SignalementFormComponent
     }
 
     this.observations.update((observations) => {
-      const index = observations.indexOf(observation);
+      const index = observations.findIndex((o) => o.name === observation.name);
       if (index >= 0) {
-        observations[index] = value;
-        return [...observations];
+        return produce(observations, (draft) => {
+          draft[index].name = value;
+        });
       }
       return observations;
     });
+    this.updateObservationControl();
   }
 
-  removeObservation(value: string) {
+  removeObservation(value: ObservationChip) {
     this.observations.update((observations) =>
-      observations.filter((o) => o !== value)
+      observations.filter((o) => o.name !== value.name)
     );
+    this.updateObservationControl();
   }
+
+  private updateObservationControl() {
+    this.form.controls.observations.setValue(this.observations());
+  }
+  //#endregion observation chips
 }

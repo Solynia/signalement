@@ -15,7 +15,6 @@
       class="mat-mdc-chip-set-stacked"
       #chipGrid
       aria-label="Saisir des observations"
-      formControlName="observations"
     >
       @for (observation of observations(); track observation) {
       <mat-chip-row
@@ -23,10 +22,10 @@
         (edited)="editObservation($event, observation)"
         (removed)="removeObservation(observation)"
       >
-        {{ observation }}
+        {{ observation.name }}
         <button
           matChipRemove
-          [attr.aria-label]="'Enlever observations: ' + observation"
+          [attr.aria-label]="'Enlever observations: ' + observation.name"
         >
           <mat-icon>cancel</mat-icon>
         </button>

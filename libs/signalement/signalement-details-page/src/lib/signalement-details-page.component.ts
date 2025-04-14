@@ -29,7 +29,7 @@ const modelToFormValue = (
   signalement?: Signalement
 ): SignalementDetailsFormValue['signalement'] => ({
   description: signalement?.description ?? '',
-  observations: signalement?.observations.map((o) => o.name) ?? [],
+  observations: signalement?.observations ?? [],
   author: {
     first_name: signalement?.author.first_name ?? '',
     last_name: signalement?.author.last_name ?? '',
@@ -50,7 +50,7 @@ const formValueToCreate = (
     sex: value.author.sex,
     email: value.author.email,
   },
-  observations: value.observations.map((name) => ({ name })),
+  observations: value.observations,
 });
 
 const formValueToUpdate = (
@@ -67,7 +67,7 @@ const formValueToUpdate = (
     sex: value.author.sex,
     email: value.author.email,
   },
-  observations: value.observations.map((name) => ({ name })),
+  observations: value.observations,
 });
 
 export interface SignalementDetailsFormValue {
