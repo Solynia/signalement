@@ -97,7 +97,6 @@ export class AuthorDetailsPageComponent implements OnInit, OnDestroy {
       .select(selectSelectedAuthor)
       .pipe(
         take(1),
-        filter((a) => !!a),
         map((a) =>
           a
             ? authorActions.updateAuthor({

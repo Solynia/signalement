@@ -136,7 +136,6 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
       .select(selectSelectedSignalement)
       .pipe(
         take(1),
-        filter((s) => !!s),
         map((s) =>
           s
             ? signalementActions.updateSignalement({
