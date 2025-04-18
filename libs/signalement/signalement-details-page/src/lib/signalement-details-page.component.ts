@@ -35,11 +35,11 @@ const modelToFormValue = (
   observations: signalement?.observations ?? [],
   authorId: signalement?.author.id ?? '',
   author: {
-    first_name: signalement?.author.first_name ?? '',
-    last_name: signalement?.author.last_name ?? '',
-    birth_date: signalement?.author.birth_date ?? new Date(),
-    sex: signalement?.author.sex ?? '',
-    email: signalement?.author.email ?? '',
+    first_name: '',
+    last_name: '',
+    birth_date: new Date(),
+    sex: '',
+    email: '',
   },
 });
 
