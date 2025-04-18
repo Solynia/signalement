@@ -1,4 +1,7 @@
-<section [formGroup]="form" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<section
+  [formGroupName]="controlKey()"
+  class="grid grid-cols-1 md:grid-cols-3 gap-5"
+>
   <mat-form-field [floatLabel]="'always'">
     <mat-label>Prénom</mat-label>
     <input matInput formControlName="first_name" />

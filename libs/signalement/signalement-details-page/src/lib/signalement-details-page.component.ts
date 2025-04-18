@@ -5,14 +5,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectAuthors } from '@signalement/author-store';
 import {
+  SignalementForm,
   SignalementFormComponent,
+  signalementFormGroupFactory,
   SignalementFormValue,
 } from '@signalement/signalement-form';
 import {
@@ -24,7 +26,7 @@ import {
   selectSelectedSignalement,
   signalementActions,
 } from '@signalement/signalement-store';
-import { filter, map, ReplaySubject, take, takeUntil, tap } from 'rxjs';
+import { map, ReplaySubject, take, takeUntil, tap } from 'rxjs';
 
 const modelToFormValue = (
   signalement?: Signalement
@@ -64,7 +66,7 @@ const formValueToUpdate = (
 
   description: value.description,
   author: {
-    id: value.authorId,
+    ...(value.authorId && { id: value.authorId }),
     first_name: value.author.first_name,
     last_name: value.author.last_name,
     birth_date: value.author.birth_date,
@@ -79,9 +81,7 @@ export interface SignalementDetailsFormValue {
 }
 
 type SignalementDetailsForm = {
-  [P in keyof SignalementDetailsFormValue]: FormControl<
-    SignalementDetailsFormValue[P]
-  >;
+  signalement: FormGroup<SignalementForm>;
 };
 
 @Component({
@@ -104,9 +104,7 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
 
   readonly authors = this.store.selectSignal(selectAuthors);
   readonly form = new FormGroup<SignalementDetailsForm>({
-    signalement: new FormControl<SignalementFormValue>(modelToFormValue(), {
-      nonNullable: true,
-    }),
+    signalement: signalementFormGroupFactory(modelToFormValue()),
   });
 
   ngOnInit(): void {
@@ -127,7 +125,6 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.form.updateValueAndValidity();
     if (this.form.invalid) {
       return;
     }
@@ -141,7 +138,8 @@ export class SignalementDetailsPageComponent implements OnInit, OnDestroy {
             ? signalementActions.updateSignalement({
                 data: formValueToUpdate(
                   s.id,
-                  this.form.getRawValue().signalement
+                  this.form.value
+                    .signalement as SignalementDetailsFormValue['signalement']
                 ),
               })
             : signalementActions.createSignalement({

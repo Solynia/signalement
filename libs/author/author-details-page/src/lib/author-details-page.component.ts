@@ -10,14 +10,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthorFormComponent, AuthorFormValue } from '@signalement/author-form';
+import {
+  AuthorForm,
+  AuthorFormComponent,
+  authorFormGroupFactory,
+  AuthorFormValue,
+} from '@signalement/author-form';
 import {
   Author,
   AuthorCreate,
   AuthorUpdate,
 } from '@signalement/author-service';
 import { authorActions, selectSelectedAuthor } from '@signalement/author-store';
-import { filter, map, ReplaySubject, take, takeUntil, tap } from 'rxjs';
+import { map, ReplaySubject, take, takeUntil, tap } from 'rxjs';
 
 const modelToFormValue = (
   author?: Author
@@ -43,7 +48,11 @@ export interface AuthorDetailsFormValue {
 }
 
 type AuthorDetailsForm = {
-  [P in keyof AuthorDetailsFormValue]: FormControl<AuthorDetailsFormValue[P]>;
+  [P in keyof Omit<AuthorDetailsFormValue, 'author'>]: FormControl<
+    AuthorDetailsFormValue[P]
+  >;
+} & {
+  author: FormGroup<AuthorForm>;
 };
 
 @Component({
@@ -65,9 +74,7 @@ export class AuthorDetailsPageComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new ReplaySubject<void>(1);
 
   readonly form = new FormGroup<AuthorDetailsForm>({
-    author: new FormControl<AuthorFormValue>(modelToFormValue(), {
-      nonNullable: true,
-    }),
+    author: authorFormGroupFactory(modelToFormValue()),
   });
 
   ngOnInit(): void {
@@ -88,7 +95,6 @@ export class AuthorDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.form.updateValueAndValidity();
     if (this.form.invalid) {
       return;
     }

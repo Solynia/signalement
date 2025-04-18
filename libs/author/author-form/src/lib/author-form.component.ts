@@ -1,20 +1,17 @@
 import { TitleCasePipe } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  inject,
+  input,
 } from '@angular/core';
 import {
   AbstractControl,
-  ControlValueAccessor,
+  ControlContainer,
   FormControl,
   FormGroup,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   ValidationErrors,
-  Validator,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -23,7 +20,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ReplaySubject, takeUntil, tap } from 'rxjs';
 
 const SEXES = ['Homme', 'Femme', 'Non-binaire'];
 
@@ -52,13 +48,35 @@ export interface AuthorFormValue {
   email: string;
 }
 
-type AuthorForm = {
+export type AuthorForm = {
   [P in keyof AuthorFormValue]: FormControl<AuthorFormValue[P]>;
 };
 
-type OnChangeFn = (value: AuthorFormValue | null) => void;
-
-type OnTouchedFn = () => void;
+export const authorFormGroupFactory = (
+  initialValue?: Partial<AuthorFormValue>
+) =>
+  new FormGroup<AuthorForm>({
+    first_name: new FormControl(initialValue?.first_name ?? '', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(50)],
+    }),
+    last_name: new FormControl(initialValue?.last_name ?? '', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(50)],
+    }),
+    birth_date: new FormControl(initialValue?.birth_date ?? new Date(), {
+      nonNullable: true,
+      validators: [Validators.required, hundredYearsValidator],
+    }),
+    sex: new FormControl(initialValue?.sex ?? '', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    email: new FormControl(initialValue?.email ?? '', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+  });
 
 @Component({
   selector: 'sg-author-form',
@@ -70,121 +88,29 @@ type OnTouchedFn = () => void;
     MatSelectModule,
     TitleCasePipe,
   ],
-  providers: [
+  providers: [provideNativeDateAdapter()],
+  viewProviders: [
     {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: AuthorFormComponent,
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, { skipSelf: true }),
     },
-    {
-      provide: NG_VALIDATORS,
-      multi: true,
-      useExisting: AuthorFormComponent,
-    },
-    provideNativeDateAdapter(),
   ],
   templateUrl: './author-form.component.html',
   styleUrl: './author-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorFormComponent
-  implements ControlValueAccessor, Validator, AfterViewInit, OnDestroy
-{
+export class AuthorFormComponent {
+  private readonly parentContainer = inject(ControlContainer);
+
+  controlKey = input.required<string>();
+
   maxDate = new Date();
   minDate = getMinDate();
   sexes = SEXES;
 
-  private readonly destroyed$ = new ReplaySubject<void>(1);
-
-  readonly form = new FormGroup<AuthorForm>({
-    first_name: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(50)],
-    }),
-    last_name: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(50)],
-    }),
-    birth_date: new FormControl(new Date(), {
-      nonNullable: true,
-      validators: [Validators.required, hundredYearsValidator],
-    }),
-    sex: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    email: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.email],
-    }),
-  });
-
-  value: AuthorFormValue | null = null;
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange = (_: AuthorFormValue | null) => {};
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onTouched = () => {};
-
-  touched = false;
-
-  disabled = false;
-
-  ngAfterViewInit() {
-    this.form.valueChanges
-      .pipe(
-        tap(() => {
-          this.markAsTouched();
-          this.onChange(this.form.getRawValue());
-        }),
-        takeUntil(this.destroyed$)
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.destroyed$.next();
-    this.destroyed$.complete();
-  }
-
-  writeValue(value: AuthorFormValue) {
-    this.form.setValue(value);
-    this.value = value;
-  }
-
-  registerOnChange(onChange: OnChangeFn) {
-    this.onChange = onChange;
-  }
-
-  registerOnTouched(onTouched: OnTouchedFn) {
-    this.onTouched = onTouched;
-  }
-
-  markAsTouched() {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
-    }
-  }
-
-  setDisabledState?(isDisabled: boolean) {
-    this.disabled = isDisabled;
-    if (isDisabled) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
-  }
-
-  markAllAsTouched() {
-    this.form.markAllAsTouched();
-  }
-
-  validate(): ValidationErrors | null {
-    if (!this.form.valid) {
-      return { invalid: true };
-    }
-    return null;
+  get form() {
+    return (this.parentContainer.control as FormGroup).controls[
+      this.controlKey()
+    ] as FormGroup<AuthorForm>;
   }
 }

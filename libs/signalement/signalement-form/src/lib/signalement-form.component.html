@@ -1,4 +1,4 @@
-<section [formGroup]="form" class="flex flex-col gap-5">
+<section [formGroupName]="controlKey()" class="flex flex-col gap-5">
   <mat-form-field>
     <mat-label>Description</mat-label>
     <input matInput formControlName="description" />
@@ -35,7 +35,7 @@
   </div>
 
   @if (!checked()) {
-  <sg-author-form formControlName="author" />
+  <sg-author-form controlKey="author" />
   }
 
   <mat-form-field>

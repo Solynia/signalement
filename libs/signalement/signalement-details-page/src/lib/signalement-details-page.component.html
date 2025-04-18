@@ -1,5 +1,5 @@
 <form [formGroup]="form" class="p-5" (ngSubmit)="onSubmit()">
-  <sg-signalement-form formControlName="signalement" [authors]="authors()" />
+  <sg-signalement-form controlKey="signalement" [authors]="authors()" />
 
   <button mat-flat-button type="submit">
     <mat-icon fontIcon="save"></mat-icon>Sauvegarder
